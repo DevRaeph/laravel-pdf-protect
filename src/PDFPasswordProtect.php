@@ -21,6 +21,7 @@ class PDFPasswordProtect
             $wh = $mpdf->getTemplateSize($tplId);
             if (($p==1)){
                 $mpdf->state = 0;
+                $mpdf->AddPage($wh['width']>$wh['height']?'L':'P');
                 $mpdf->UseTemplate($tplId);
             }
             else {
