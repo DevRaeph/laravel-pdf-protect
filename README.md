@@ -1,4 +1,4 @@
-# Laravel PDF Protect
+# Laravel PDF Protect (fork)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/devraeph/laravel-pdf-protect.svg?style=flat-square)](https://packagist.org/packages/devraeph/laravel-pdf-protect)
 [![Total Downloads](https://img.shields.io/packagist/dt/devraeph/laravel-pdf-protect.svg?style=flat-square)](https://packagist.org/packages/devraeph/laravel-pdf-protect)
@@ -36,7 +36,7 @@ composer test
 
 ## Credits
 
-- [Owen Jubilant](https://github.com/owenoj)
+- [Owen Jubilant](https://github.com/owenoj) (creator of the original package) - [PDF Password Protect](https://github.com/Owen-oj/pdf-password-protect)
 - [DevRaeph](https://github.com/devraeph) (refactored classes to comply with PSR-4)
 
 ## License
