@@ -15,8 +15,20 @@ class PDFPasswordProtect
         $mpdf = new \Mpdf\Mpdf();
 
         $pagecount = $mpdf->setSourceFile($inputFile);
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);
+
+        for ($p = 1; $p <= $pagecount; $p++) {
+            $tplId = $mpdf->importPage($p);
+            $wh = $mpdf->getTemplateSize($tplId);
+            if (($p==1)){
+                $mpdf->state = 0;
+                $mpdf->UseTemplate($tplId);
+            }
+            else {
+                $mpdf->state = 1;
+                $mpdf->AddPage($wh['width']>$wh['height']?'L':'P');
+                $mpdf->UseTemplate($tplId);
+            }
+        }
 
         //set owner password to user password if null
         $ownerPassword = is_null($ownerPassword) ? $password : $ownerPassword;

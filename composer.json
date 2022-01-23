@@ -31,11 +31,6 @@
             "DevRaeph\\PDFPasswordProtect\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "DevRaeph\\PDFPasswordProtect\\Tests\\": "tests"
-        }
-    },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
