@@ -1,0 +1,56 @@
+{
+    "name": "devraeph/laravel-pdf-protect",
+    "description": "Password protect PDF in Laravel",
+    "keywords": [
+        "devraeph",
+        "pdf",
+        "password",
+        "protect"
+    ],
+    "homepage": "https://github.com/devraeph/laravel-pdf-protect",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Raphael Planer aka DevRaeph",
+            "email": "me@devraeph.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
+        "mpdf/mpdf": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevRaeph\\PDFPasswordProtect\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DevRaeph\\PDFPasswordProtect\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DevRaeph\\PDFPasswordProtect\\PDFPasswordProtectServiceProvider"
+            ],
+            "aliases": {
+                "PDFPasswordProtect": "PDFPasswordProtect"
+            }
+        }
+    }
+}
