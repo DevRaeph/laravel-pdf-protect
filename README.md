@@ -36,7 +36,7 @@ composer test
 
 ## Credits
 
-- [Owen Jubilant](https://github.com/owenoj) (creator of the original package) - [PDF Password Protect](https://github.com/Owen-oj/pdf-password-protect)
+- [Owen Jubilant](https://github.com/Owen-oj) (creator of the original package) - [PDF Password Protect](https://github.com/Owen-oj/pdf-password-protect)
 - [DevRaeph](https://github.com/devraeph) (refactored classes to comply with PSR-4)
 
 ## License
