@@ -17,10 +17,11 @@ class PDFPasswordProtect
         $pagecount = $mpdf->setSourceFile($inputFile);
 
         for ($p = 1; $p <= $pagecount; $p++) {
-            $tplId = $mpdf->importPage($p);
+            $tplId =    $mpdf->importPage($p);
             $wh = $mpdf->getTemplateSize($tplId);
-            if (($p == 1)) {
-                $mpdf->state = 0;
+            if (($p ==1)) {
+                
+                $mpdf->state= 0;
                 $mpdf->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
                 $mpdf->UseTemplate($tplId);
             } else {
