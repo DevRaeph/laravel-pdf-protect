@@ -54,7 +54,7 @@ class PDFPasswordProtectServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('pdf-password-protect', function () {
-            return new PDFPasswordProtect;
+            return new PDFPasswordProtect();
         });
     }
 }

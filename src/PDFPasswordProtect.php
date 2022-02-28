@@ -19,14 +19,13 @@ class PDFPasswordProtect
         for ($p = 1; $p <= $pagecount; $p++) {
             $tplId = $mpdf->importPage($p);
             $wh = $mpdf->getTemplateSize($tplId);
-            if (($p==1)){
+            if (($p == 1)) {
                 $mpdf->state = 0;
-                $mpdf->AddPage($wh['width']>$wh['height']?'L':'P');
+                $mpdf->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
                 $mpdf->UseTemplate($tplId);
-            }
-            else {
+            } else {
                 $mpdf->state = 1;
-                $mpdf->AddPage($wh['width']>$wh['height']?'L':'P');
+                $mpdf->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
                 $mpdf->UseTemplate($tplId);
             }
         }
@@ -34,8 +33,8 @@ class PDFPasswordProtect
         //set owner password to user password if null
         $ownerPassword = is_null($ownerPassword) ? $password : $ownerPassword;
 
-        $mpdf->SetProtection(array('copy', 'print'), $password, $ownerPassword);
+        $mpdf->SetProtection(['copy', 'print'], $password, $ownerPassword);
 
-        $mpdf->Output($outputFile,\Mpdf\Output\Destination::FILE,);
+        $mpdf->Output($outputFile, \Mpdf\Output\Destination::FILE, );
     }
 }
