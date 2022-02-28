@@ -1,6 +1,8 @@
 # Laravel PDF Protect (fork)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/devraeph/laravel-pdf-protect.svg?style=flat-square)](https://packagist.org/packages/devraeph/laravel-pdf-protect)
+[![Check & fix styling](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/php-cs-fixer.yml)
+[![run-tests](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/run-tests.yml/badge.svg)](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/devraeph/laravel-pdf-protect.svg?style=flat-square)](https://packagist.org/packages/devraeph/laravel-pdf-protect)
 
 Simple wrapper package around MPDF's `setProtection` method that allows you to set password on PDF files.
