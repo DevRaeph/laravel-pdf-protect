@@ -44,3 +44,5 @@ composer test
 
 ## License
 The MIT License (MIT).
+
+[Issues]: https://img.shields.io/github/issues/DevRaeph/laravel-pdf-protect
