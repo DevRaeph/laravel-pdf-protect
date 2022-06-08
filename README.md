@@ -1,4 +1,4 @@
-# Laravel PDF Protect (fork)
+# Laravel PDF Protect
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/devraeph/laravel-pdf-protect.svg?style=flat-square)](https://packagist.org/packages/devraeph/laravel-pdf-protect)
 [![Check & fix styling](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/DevRaeph/laravel-pdf-protect/actions/workflows/php-cs-fixer.yml)
