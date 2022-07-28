@@ -42,6 +42,9 @@ composer test
 - [Owen Jubilant](https://github.com/Owen-oj) (creator of the original package) - [PDF Password Protect](https://github.com/Owen-oj/pdf-password-protect)
 - [DevRaeph](https://github.com/devraeph) (refactored classes to comply with PSR-4)
 
+## Sponsor
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A3E29FS)
+
 ## License
 The MIT License (MIT).
 
