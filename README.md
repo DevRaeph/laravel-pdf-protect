@@ -10,11 +10,11 @@ Simple wrapper package around MPDF's `setProtection` method that allows you to s
 
 ### Version Compatibilities
 
-| Laravel HashId 	 |         PHP Version      	         |  Laravel 6.*    	  |   Laravel 7.*    	   |          Laravel 8.*    	           |     Laravel 9.*    	      |  Laravel 10.*    	   |
-|------------------|:----------------------------------:|:------------------:|:--------------------:|:-----------------------------------:|:-------------------------:|:--------------------:|
-| `1.0.0`     	    | `>=7.4` - `<= 8.0`               	 | :white_check_mark: |  :white_check_mark:  | :white_check_mark:                	 |   :x:                	    | :x:                	 |
-| `1.1.2`     	    | `>=7.4` - `<= 8.1`               	 |        :x:         |  :white_check_mark:  | :white_check_mark:                	 | :white_check_mark:      	 | :x:                	 |
-| `2.x`     	      |      `>=7.4` - `<= 8.2`    	       |        :x:         | :white_check_mark: 	 |        :white_check_mark: 	         |   :white_check_mark: 	    | :white_check_mark:	  |
+| Laravel PDF Protect 	 |         PHP Version      	         |  Laravel 6.*    	  |   Laravel 7.*    	   |          Laravel 8.*    	           |     Laravel 9.*    	      |  Laravel 10.*    	   |
+|-----------------------|:----------------------------------:|:------------------:|:--------------------:|:-----------------------------------:|:-------------------------:|:--------------------:|
+| `1.0.0`     	         | `>=7.4` - `<= 8.0`               	 | :white_check_mark: |  :white_check_mark:  | :white_check_mark:                	 |   :x:                	    | :x:                	 |
+| `1.1.2`     	         | `>=7.4` - `<= 8.1`               	 |        :x:         |  :white_check_mark:  | :white_check_mark:                	 | :white_check_mark:      	 | :x:                	 |
+| `2.x`     	           |      `>=7.4` - `<= 8.2`    	       |        :x:         | :white_check_mark: 	 |        :white_check_mark: 	         |   :white_check_mark: 	    | :white_check_mark:	  |
 
 ### Installation
 
