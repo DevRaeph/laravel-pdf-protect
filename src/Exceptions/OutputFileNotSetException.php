@@ -10,28 +10,24 @@
 * | Author:     Develogix Agency e.U. - Raphael Planer
 * | E-Mail:     office@develogix.at
 * | Project:    laravel-pdf-protect
-* | Filename:   PDFPasswordProtect.php
+* | Filename:   OutputFileNotSetException.php
 * | Created:    12.06.2023 (12:56:02)
 * | Copyright (C) 2023 Develogix Agency e.U. All Rights Reserved
 * | Website:    https://develogix.at
 */
 
-namespace DevRaeph\PDFPasswordProtect\Facade;
+namespace DevRaeph\PDFPasswordProtect\Exceptions;
 
-use Illuminate\Support\Facades\Facade;
+use Exception;
+use Throwable;
 
-/**
- * @see \DevRaeph\PDFPasswordProtect\PDFPasswordProtect
- */
-class PDFPasswordProtect extends Facade
+class OutputFileNotSetException extends Exception
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
-    protected static function getFacadeAccessor()
+    public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
     {
-        return \DevRaeph\PDFPasswordProtect\PDFPasswordProtect::class;
+        if ($message == '') {
+            $message = 'Output File not set, please use setOutput(file) before.';
+        }
+        parent::__construct($message, $code, $previous);
     }
 }

@@ -18,18 +18,57 @@ composer require devraeph/laravel-pdf-protect
 
 ## Usage
 
-You can use via Facade like so:
+#### Version 2.x
+In version 2.x the usage is more common to use and simplified. 
 
+```php
+$inputFile = storage_path('pdf/LetterFormat.pdf');
+$outputFile = storage_path('pdf/encrypted-123.pdf');
+
+PDFPasswordProtect::setInputFile($inputFile)
+    ->setOutputFile($outputFile)
+    ->setPassword("1234")
+    ->secure();
+```
+
+You can also add the optional method 'setOwnerPassword':
+```php
+...
+
+PDFPasswordProtect::setInputFile($inputFile)
+    ...
+    ->setOwnerPassword("1234")
+    ->secure();
+```
+
+Alternative new options are: 'setMode' and 'setFormat'.
+>setFormat is default 'auto' and will now detect the document format.
+> Before v2.x it was set to 'A4'.
+```php
+PDFPasswordProtect::setInputFile($inputFile)
+...
+->setMode("en_GB") //You can set different language values. Default is utf-8
+->setFormat("auto|A4|Letter") //You can set a Document format. Default is auto.
+->secure();
+```
+
+#### Version 1.x
+You can also use the old version from v1.x in v2.x, but it is 
+deprecated and will no longer get any updates.
 ```php
 PdfPasswordProtect::encrypt(storage_path('pdf/document.pdf'),storage_path('pdf/'.'encrypted-documented.pdf'),'janedoe');
 ```
 Encrypt method in detail
 * $inputFile and $outputFile has to be a path like `storage_path("pdf/document.pdf")`
-```
-PdfPasswordProtect::encrypt($inputFile,outputFile,$password)
+```php
+PdfPasswordProtect::encrypt($inputFile,$outputFile,$password)
 ```
 
 The final file will be located in `storage/pdf` as `encrypted-document.pdf`
+
+### WIP
+For Version 2.1.x: 
+- Support for the Storage::class, to use s3 or external storages.
 
 ### Testing
 
