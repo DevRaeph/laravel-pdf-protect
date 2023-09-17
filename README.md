@@ -8,7 +8,15 @@
 
 Simple wrapper package around MPDF's `setProtection` method that allows you to set password on PDF files.
 
-## Installation
+### Version Compatibilities
+
+| Laravel HashId 	 |         PHP Version      	         |   Laravel 7.*    	   |          Laravel 8.*    	           |          Laravel 9.*    	           |  Laravel 10.*    	   |
+|------------------|:----------------------------------:|:--------------------:|:-----------------------------------:|:-----------------------------------:|:--------------------:|
+| `1.0.0`     	    | `>=7.4` - `<= 8.0`               	 |  :white_check_mark:  | :white_check_mark:                	 |        :x:                	         | :x:                	 |
+| `1.1.2`     	    | `>=7.4` - `<= 8.1`               	 |  :white_check_mark:  | :white_check_mark:                	 |      :white_check_mark:      	      | :x:                	 |
+| `2.x`     	      |      `>=7.4` - `<= 8.2`    	       | :white_check_mark: 	 |        :white_check_mark: 	         |        :white_check_mark: 	         | :white_check_mark:	  |
+
+### Installation
 
 You can install the package via composer:
 
@@ -16,7 +24,7 @@ You can install the package via composer:
 composer require devraeph/laravel-pdf-protect
 ```
 
-## Usage
+### Usage
 
 #### Version 2.x
 In version 2.x the usage is more common to use and simplified. 
