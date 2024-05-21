@@ -46,11 +46,12 @@ class PDFPasswordProtect
      */
     public function setInputFile(string $inputFile, string $disk = 'local'): PDFPasswordProtect
     {
-        if (!Storage::disk($disk)->exists($inputFile)) {
+        if (! Storage::disk($disk)->exists($inputFile)) {
             throw new InputFileNotFoundException();
         }
         $this->inputFile = $inputFile;
         $this->inputDisk = $disk;
+
         return $this;
     }
 
@@ -65,6 +66,7 @@ class PDFPasswordProtect
     {
         $this->outputFile = $outputFile;
         $this->outputDisk = $disk;
+
         return $this;
     }
 
@@ -77,6 +79,7 @@ class PDFPasswordProtect
     public function setPassword(string $password): PDFPasswordProtect
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ class PDFPasswordProtect
     public function setOwnerPassword(string $ownerPassword): PDFPasswordProtect
     {
         $this->ownerPassword = $ownerPassword;
+
         return $this;
     }
 
@@ -101,6 +105,7 @@ class PDFPasswordProtect
     public function setMode(string $mode): PDFPasswordProtect
     {
         $this->mode = $mode;
+
         return $this;
     }
 
@@ -113,6 +118,7 @@ class PDFPasswordProtect
     public function setFormat(array|string $format): PDFPasswordProtect
     {
         $this->format = $format;
+
         return $this;
     }
 
@@ -128,7 +134,7 @@ class PDFPasswordProtect
     private function getPageSize(): array
     {
         $mpdf = new \Mpdf\Mpdf();
-        if (!isset($this->inputFile)) {
+        if (! isset($this->inputFile)) {
             throw new InputFileNotSetException();
         }
 
@@ -155,15 +161,15 @@ class PDFPasswordProtect
      */
     public function secure(): void
     {
-        if (!isset($this->inputFile)) {
+        if (! isset($this->inputFile)) {
             throw new InputFileNotSetException();
         }
 
-        if (!isset($this->outputFile)) {
+        if (! isset($this->outputFile)) {
             throw new OutputFileNotSetException();
         }
 
-        if (!isset($this->password)) {
+        if (! isset($this->password)) {
             throw new PasswordNotSetException();
         }
 
@@ -196,7 +202,7 @@ class PDFPasswordProtect
 
         Storage::disk($this->outputDisk)->put($this->outputFile, file_get_contents($tempOutputFile));
         unlink($tempOutputFile);
-     }
+    }
 
     /**
      * Encrypt the PDF.
