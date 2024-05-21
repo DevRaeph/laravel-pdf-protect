@@ -27,7 +27,16 @@ composer require devraeph/laravel-pdf-protect
 
 ### Usage
 
-#### Version 2.x
+#### Version 3.x
+In version 3.x the usage supports now multiple Storage support local, s3, ...
+```php
+PDFPasswordProtect::setInputFile('pdf/LetterFormat.pdf','local|s3|...')
+    ->setOutputFile('pdf/encrypted-123.pdf','local|s3|...')
+    ->setPassword("1234")
+    ->secure();
+```
+
+#### OLD Version 2.x
 In version 2.x the usage is more common to use and simplified. 
 
 ```php
@@ -75,9 +84,6 @@ PdfPasswordProtect::encrypt($inputFile,$outputFile,$password)
 
 The final file will be located in `storage/pdf` as `encrypted-document.pdf`
 
-### WIP
-For Version 2.1.x: 
-- Support for the Storage::class, to use s3 or external storages.
 
 ### Testing
 

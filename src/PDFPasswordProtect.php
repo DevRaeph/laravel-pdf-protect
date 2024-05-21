@@ -1,20 +1,4 @@
 <?php
-/*
-*       ____                        __                    _
-*      / __ \  ___  _   __  ___    / /  ____    ____ _   (_)   _  __
-*     / / / / / _ \| | / / / _ \  / /  / __ \  / __ `/  / /   | |/_/
-*    / /_/ / /  __/| |/ / /  __/ / /  / /_/ / / /_/ /  / /   _>  <
-*   /_____/  \___/ |___/  \___/ /_/   \____/  \__, /  /_/   /_/|_|
-*                                         /____/
-*  ___________________________________________________________________
-* | Author:     Develogix Agency e.U. - Raphael Planer
-* | E-Mail:     office@develogix.at
-* | Project:    laravel-pdf-protect
-* | Filename:   PDFPasswordProtect.php
-* | Created:    12.06.2023 (12:56:02)
-* | Copyright (C) 2023 Develogix Agency e.U. All Rights Reserved
-* | Website:    https://develogix.at
-*/
 
 namespace DevRaeph\PDFPasswordProtect;
 
@@ -22,6 +6,7 @@ use DevRaeph\PDFPasswordProtect\Exceptions\InputFileNotFoundException;
 use DevRaeph\PDFPasswordProtect\Exceptions\InputFileNotSetException;
 use DevRaeph\PDFPasswordProtect\Exceptions\OutputFileNotSetException;
 use DevRaeph\PDFPasswordProtect\Exceptions\PasswordNotSetException;
+use Illuminate\Support\Facades\Storage;
 use Mpdf\MpdfException;
 use Mpdf\Output\Destination;
 use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
@@ -29,9 +14,9 @@ use setasign\Fpdi\PdfParser\PdfParserException;
 use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 
 /**
- * PDFPassword Protect
- * Use the setInputFile, setOutputFile and setPassword methods to add the necessary parameters.
- * Afterwords call the secure method to finalize the protected PDF.
+ * PDFPasswordProtect
+ * Use the setInputFile, setOutputFile, setPassword methods to add the necessary parameters.
+ * Afterwards call the secure method to finalize the protected PDF.
  */
 class PDFPasswordProtect
 {
@@ -41,99 +26,100 @@ class PDFPasswordProtect
 
     protected string $password;
 
-    protected string $ownerPassword;
+    protected ?string $ownerPassword = null;
 
     protected string $mode = 'utf-8';
 
     protected array|string $format = 'auto';
 
+    protected string $inputDisk;
+
+    protected string $outputDisk;
+
     /**
-     * This function will append the file path to the facade. Support is
-     * storage_path() atm. WIP is Storage::class and s3 support.
+     * Set the input file and disk.
+     *
      * @param string $inputFile
+     * @param string $disk
      * @return PDFPasswordProtect
      * @throws InputFileNotFoundException
      */
-    public function setInputFile(string $inputFile): PDFPasswordProtect
+    public function setInputFile(string $inputFile, string $disk = 'local'): PDFPasswordProtect
     {
-        try {
-            fopen($inputFile, 'r');
-        } catch (\Exception $exception) {
+        if (!Storage::disk($disk)->exists($inputFile)) {
             throw new InputFileNotFoundException();
         }
         $this->inputFile = $inputFile;
-
+        $this->inputDisk = $disk;
         return $this;
     }
 
     /**
-     * This function will define the output path. Same as InputFile with storage_path().
-     * Storage::class and s3 support will come later this year.
+     * Set the output file and disk.
+     *
      * @param string $outputFile
+     * @param string $disk
      * @return PDFPasswordProtect
      */
-    public function setOutputFile(string $outputFile): PDFPasswordProtect
+    public function setOutputFile(string $outputFile, string $disk = 'local'): PDFPasswordProtect
     {
         $this->outputFile = $outputFile;
-
+        $this->outputDisk = $disk;
         return $this;
     }
 
     /**
-     * This function will set the password for the encrypted PDF file.
+     * Set the password for the PDF.
+     *
      * @param string $password
      * @return PDFPasswordProtect
      */
     public function setPassword(string $password): PDFPasswordProtect
     {
         $this->password = $password;
-
         return $this;
     }
 
     /**
-     * This function will define a separate Owner password for the file.
-     * Only the Owner can modify and edit this file.
+     * Set the owner password for the PDF.
+     *
      * @param string $ownerPassword
      * @return PDFPasswordProtect
      */
     public function setOwnerPassword(string $ownerPassword): PDFPasswordProtect
     {
         $this->ownerPassword = $ownerPassword;
-
         return $this;
     }
 
     /**
-     * Mode of the Document.
-     * Default 'utf-8'.
-     * Possible values are country codes for example: 'en-GB', 'en_GB' or 'en'.
+     * Set the mode of the document.
+     *
      * @param string $mode
      * @return PDFPasswordProtect
      */
     public function setMode(string $mode): PDFPasswordProtect
     {
         $this->mode = $mode;
-
         return $this;
     }
 
     /**
-     * Format of the Document.
-     * Default 'auto', is using the input file values.
-     * Possible values are 'A0', 'A4', 'Letter', etc.
-     * For more possible values check https://mpdf.github.io/reference/mpdf-functions/construct.html
+     * Set the format of the document.
+     *
      * @param string|array $format
      * @return PDFPasswordProtect
      */
     public function setFormat(array|string $format): PDFPasswordProtect
     {
         $this->format = $format;
-
         return $this;
     }
 
     /**
+     * Get the page size of the PDF.
+     *
+     * @return array
      * @throws CrossReferenceException
      * @throws PdfParserException
      * @throws InputFileNotSetException
@@ -142,17 +128,22 @@ class PDFPasswordProtect
     private function getPageSize(): array
     {
         $mpdf = new \Mpdf\Mpdf();
-        if (! isset($this->inputFile)) {
+        if (!isset($this->inputFile)) {
             throw new InputFileNotSetException();
         }
-        $mpdf->setSourceFile($this->inputFile);
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'pdf');
+        file_put_contents($tempFile, Storage::disk($this->inputDisk)->get($this->inputFile));
+
+        $mpdf->setSourceFile($tempFile);
         $getFirstPage = $mpdf->importPage(1);
+        unlink($tempFile);
 
         return $mpdf->getTemplateSize($getFirstPage);
     }
 
     /**
-     * Secure will create the final protected PDF.
+     * Secure the PDF with a password.
      *
      * @throws CrossReferenceException
      * @throws InputFileNotSetException
@@ -164,15 +155,15 @@ class PDFPasswordProtect
      */
     public function secure(): void
     {
-        if (! isset($this->inputFile)) {
+        if (!isset($this->inputFile)) {
             throw new InputFileNotSetException();
         }
 
-        if (! isset($this->outputFile)) {
+        if (!isset($this->outputFile)) {
             throw new OutputFileNotSetException();
         }
 
-        if (! isset($this->password)) {
+        if (!isset($this->password)) {
             throw new PasswordNotSetException();
         }
 
@@ -181,63 +172,55 @@ class PDFPasswordProtect
             'mode' => $this->mode,
             'format' => ($this->format == 'auto')
                 ? [$pageSize['width'], $pageSize['height']]
-                : (($pageSize['width'] < $pageSize['height']) ? $this->format : $this->format.'-L'),
+                : (($pageSize['width'] < $pageSize['height']) ? $this->format : $this->format . '-L'),
         ]);
 
-        $pagecount = $export->setSourceFile($this->inputFile);
+        $tempInputFile = tempnam(sys_get_temp_dir(), 'pdf');
+        file_put_contents($tempInputFile, Storage::disk($this->inputDisk)->get($this->inputFile));
+
+        $pagecount = $export->setSourceFile($tempInputFile);
         for ($p = 1; $p <= $pagecount; $p++) {
             $tplId = $export->importPage($p);
             $wh = $export->getTemplateSize($tplId);
-            if (($p == 1)) {
-                $export->state = 0;
-                $export->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
-                $export->UseTemplate($tplId);
-            } else {
-                $export->state = 1;
-                $export->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
-                $export->UseTemplate($tplId);
-            }
+            $export->state = $p == 1 ? 0 : 1;
+            $export->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
+            $export->UseTemplate($tplId);
         }
+        unlink($tempInputFile);
 
-        //set owner password to user password if null
-        $ownerPassword = (isset($this->ownerPassword)) ? $this->ownerPassword : $this->password;
+        $ownerPassword = $this->ownerPassword ?? $this->password;
         $export->SetProtection(['copy', 'print'], $this->password, $ownerPassword);
 
-        $export->Output($this->outputFile, Destination::FILE);
-    }
+        $tempOutputFile = tempnam(sys_get_temp_dir(), 'pdf');
+        $export->Output($tempOutputFile, Destination::FILE);
+
+        Storage::disk($this->outputDisk)->put($this->outputFile, file_get_contents($tempOutputFile));
+        unlink($tempOutputFile);
+     }
 
     /**
+     * Encrypt the PDF.
+     *
+     * @param string $inputFile
+     * @param string $outputFile
+     * @param string $password
+     * @param string|null $ownerPassword
+     * @param string $inputDisk
+     * @param string $outputDisk
      * @throws MpdfException
      * @throws CrossReferenceException
      * @throws PdfParserException
-     * @throws PdfTypeException*@throws InputFileNotSetException
+     * @throws PdfTypeException
+     * @throws InputFileNotSetException
      *
-     * @deprecated deprecated since version 2.0, check the docs
+     * @deprecated Deprecated since version 2.0, check the docs.
      */
-    public function encrypt($inputFile, $outputFile, $password, $ownerPassword = null): void
+    public function encrypt($inputFile, $outputFile, $password, $ownerPassword = null, $inputDisk = 'local', $outputDisk = 'local'): void
     {
-        $pageSize = $this->getPageSize();
-        $export = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [$pageSize['width'], $pageSize['height']]]);
-        $pagecount = $export->setSourceFile($inputFile);
-
-        for ($p = 1; $p <= $pagecount; $p++) {
-            $tplId = $export->importPage($p);
-            $wh = $export->getTemplateSize($tplId);
-            if (($p == 1)) {
-                $export->state = 0;
-                $export->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
-                $export->UseTemplate($tplId);
-            } else {
-                $export->state = 1;
-                $export->AddPage($wh['width'] > $wh['height'] ? 'L' : 'P');
-                $export->UseTemplate($tplId);
-            }
-        }
-
-        //set owner password to user password if null
-        $ownerPassword = is_null($ownerPassword) ? $password : $ownerPassword;
-        $export->SetProtection(['copy', 'print'], $password, $ownerPassword);
-
-        $export->Output($outputFile, Destination::FILE);
+        $this->setInputFile($inputFile, $inputDisk)
+            ->setOutputFile($outputFile, $outputDisk)
+            ->setPassword($password)
+            ->setOwnerPassword($ownerPassword ?? $password)
+            ->secure();
     }
 }
