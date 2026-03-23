@@ -10,12 +10,12 @@ Simple wrapper package around MPDF's `setProtection` method that allows you to s
 
 ### Version Compatibilities
 
-| Laravel PDF Protect 	 |         PHP Version      	         |  Laravel 6.*    	  |   Laravel 7.*    	   |          Laravel 8.*    	           |     Laravel 9.*    	      |  Laravel 10.*    	   |  Laravel 11.*    	   |  Laravel 12.*    	   |
+| Laravel PDF Protect 	 |         PHP Version      	         |   Laravel 7.*    	   |          Laravel 8.*    	           |     Laravel 9.*    	      |  Laravel 10.*    	   |  Laravel 11.*    	   |  Laravel 12.*    	   |  Laravel 13.*         |
 |-----------------------|:----------------------------------:|:------------------:|:--------------------:|:-----------------------------------:|:-------------------------:|:--------------------:|:--------------------:|:--------------------:|
-| `3.x`     	           |      `>=8.1` - `<= 8.4`     |        :x:         |         :x:	         |                :x:	                 |           :x:	            | :white_check_mark:	  | :white_check_mark: | :white_check_mark:	  |
-| `2.x`     	           |      `>=7.4` - `<= 8.2`        |        :x:         | :white_check_mark: 	 |        :white_check_mark: 	         |   :white_check_mark: 	    | :white_check_mark:	  | :x:                	 | :x:                	 |
-| `1.1.2`     	         | `>=7.4` - `<= 8.1`               	 |        :x:         |  :white_check_mark:  | :white_check_mark:                	 | :white_check_mark:      	 | :x:                	 | :x:                	 | :x:                	 |
-| `1.0.0`     	         | `>=7.4` - `<= 8.0`               	 | :white_check_mark: |  :white_check_mark:  | :white_check_mark:                	 |   :x:                	    | :x:                	 | :x:                	 | :x:                	 |
+| `3.x`     	           |      `>=8.1` - `<= 8.4`     |         :x:	         |                :x:	                 |           :x:	            | :white_check_mark:	  | :white_check_mark: | :white_check_mark:	  | :white_check_mark:    |
+| `2.x`     	           |      `>=7.4` - `<= 8.2`        | :white_check_mark: 	 |        :white_check_mark: 	         |   :white_check_mark: 	    | :white_check_mark:	  | :x:                	 | :x:                	 | :x:                     |
+| `1.1.2`     	         | `>=7.4` - `<= 8.1`               	 |  :white_check_mark:  | :white_check_mark:                	 | :white_check_mark:      	 | :x:                	 | :x:                	 | :x:                	 | :x:                     |
+| `1.0.0`     	         | `>=7.4` - `<= 8.0`               	 |  :white_check_mark:  | :white_check_mark:                	 |   :x:                	    | :x:                	 | :x:                	 | :x:                	 | :x:                     |
 
 ### Installation
 
